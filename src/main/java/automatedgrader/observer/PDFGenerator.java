@@ -1,11 +1,19 @@
-package automatedgrader.strategy;
+// package automatedgrader.observer;
+
+// // Concrete Observer Class for generating PDF reports
+// public class PDFGenerator implements PDFObserver {
+    
+// }
+
+package automatedgrader.observer;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import automatedgrader.composite.Submission;
+import automatedgrader.observer.Submission;
+import automatedgrader.strategy.EvaluationResult;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +22,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 // Concrete Strategy Class
-public class PDFGenerator implements FileGenerator {
-    @Override
-    public void generatePDF(Submission submission, List<TestResult> testResults) {
+public class PDFGenerator implements PDFObserver {
+    
+    public void updatePDF(Submission submission, List<EvaluationResult> testResults) {
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
             document.addPage(page);
@@ -34,7 +42,7 @@ public class PDFGenerator implements FileGenerator {
                 contentStream.showText("Feedback for " + studentId + ":");
                 contentStream.newLineAtOffset(0, -20);
 
-                for (TestResult result : testResults) {
+                for (EvaluationResult result : testResults) {
                     contentStream.showText(result.getTestName() + ": " + (result.isPassed() ? "Passed" : "Failed"));
                     contentStream.newLineAtOffset(0, -15);
                     contentStream.showText("Feedback: " + result.getFeedback());

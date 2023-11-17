@@ -1,13 +1,11 @@
-package automatedgrader.composite;
+package automatedgrader.observer;
 
-//  Leaf 
-public class Submission {
+// Concrete Subject Class and Context Class for State Design Pattern
+public class Submission implements SubmissionSubject {
     private String studentId;
     private String fileName;
     private int assignmentNumber;
     private double overallScore;
-
-    // Constructors, getters, setters...
 
     public Submission(String studentId, String fileName, int assignmentNumber) {
         this.studentId = studentId;
