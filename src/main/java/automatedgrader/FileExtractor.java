@@ -1,8 +1,13 @@
+package automatedgrader;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.ArrayList;
@@ -33,9 +38,23 @@ public class FileExtractor
         String filePath = destDirectory + File.separator + entry.getName();
         if (!entry.isDirectory()  && getExtension(filePath).equals("java")) {
             // if the entry is a JAVA file, extract it
-            extractFile(in, filePath);
+            extractJavaFile(in, filePath);
             files.add(filePath);
-        } else if (entry.isDirectory()){
+        }
+        else if(getExtension(filePath).equals("zip")){
+            File zipFile = new File(filePath);
+            if(!zipFile.exists()){
+                //save student zip files to submissions folder
+                Path resolvedPath = Paths.get(filePath);
+                Files.createDirectories(resolvedPath.getParent());
+                Files.copy(in, resolvedPath);
+                //recursive call to extract java files from each student submission zip
+                unzip(filePath, filePath.substring(0, filePath.length()-4));
+                //remove student zip file from submissions
+                Files.deleteIfExists(resolvedPath);
+            }
+        }
+        else if (entry.isDirectory()){
             // if the entry is a directory, make the directory
             File dir = new File(filePath);
             dir.mkdirs();
@@ -61,7 +80,7 @@ public class FileExtractor
     }
     
 
-    private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+    private static void extractJavaFile(ZipInputStream zipIn, String filePath) throws IOException {
         BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(filePath));
         byte[] bytesIn = new byte[BUFFER_SIZE];
         int read = 0;
@@ -70,4 +89,26 @@ public class FileExtractor
         }
         out.close();
     }
+
+    // private static void extractZipFile(ZipInputStream zipIn, String filePath) throws IOException {
+    //     try {
+    //         ZipEntry entry = zipIn.getNextEntry();
+    //         while (entry != null) {
+    //             Path resolvedPath = Paths.get(filePath).resolve(entry.getName()).normalize();
+    //             if (!resolvedPath.startsWith(filePath)) {
+    //                 throw new RuntimeException("Entry with an illegal path: " + entry.getName());
+    //             }
+    //             if (entry.isDirectory()) {
+    //                 Files.createDirectories(resolvedPath);
+    //             } 
+    //             else {
+    //                 Files.createDirectories(resolvedPath.getParent());
+    //                 Files.copy(zipIn, resolvedPath);
+    //             }
+    //         }
+    //     }
+    //     catch(IOException e){
+
+    //     }
+    // }
 }

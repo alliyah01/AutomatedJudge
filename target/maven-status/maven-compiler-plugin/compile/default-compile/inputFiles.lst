@@ -1,0 +1,9 @@
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/composite/Assignment.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/composite/Submission.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/composite/Evaluatable.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/strategy/PDFGenerator.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/observer/EvaluationObserver.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/strategy/TestResult.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/App.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/observer/FeedbackGenerator.java
+/workspaces/AutomatedJudgeSystem/src/main/java/automatedgrader/strategy/SimplePDFGenerator.java

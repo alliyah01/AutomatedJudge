@@ -1,0 +1,9 @@
+automatedgrader/observer/EvaluationObserver.class
+automatedgrader/App.class
+automatedgrader/composite/Evaluatable.class
+automatedgrader/composite/Submission.class
+automatedgrader/strategy/TestResult.class
+automatedgrader/strategy/PDFGenerator.class
+automatedgrader/observer/FeedbackGenerator.class
+automatedgrader/strategy/SimplePDFGenerator.class
+automatedgrader/composite/Assignment.class
