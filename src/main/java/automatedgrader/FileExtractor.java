@@ -64,8 +64,8 @@ public class FileExtractor
         }
         in.close();
         
-        for(String file: files)
-         System.out.println(file);
+        //for(String file: files)
+         //System.out.println(file);
     }
 
     //determine the file extension
