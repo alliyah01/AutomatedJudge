@@ -24,48 +24,62 @@ public class FileExtractor
     }
     
     
-    public static void unzip(String zipFilePath, String destDirectory) throws IOException
+    public static void unzip(String zipFilePath) throws IOException
     {
-     File destDir = new  File(destDirectory);
+        String filePath = zipFilePath.substring(0, zipFilePath.length()-4);
+        File destDir = new File(filePath);
+    //  File destDir = new  File(destDirectory);
      
      if (!destDir.exists()) {
-            destDir.mkdir();
+        destDir.mkdir();
      }
      ZipInputStream in = new ZipInputStream(new FileInputStream(zipFilePath));
      ZipEntry entry = in.getNextEntry();
      
      while (entry != null) {
-        String filePath = destDirectory + File.separator + entry.getName();
-        if (!entry.isDirectory()  && getExtension(filePath).equals("java")) {
-            // if the entry is a JAVA file, extract it
-            extractJavaFile(in, filePath);
-            files.add(filePath);
-        }
-        else if(getExtension(filePath).equals("zip")){
-            File zipFile = new File(filePath);
-            if(!zipFile.exists()){
+        filePath = zipFilePath.substring(0, zipFilePath.length()-4) + File.separator + entry.getName();
+        File file = new File(filePath);
+        if(!file.exists()){
+            Path resolvedPath = Paths.get(filePath);
+            Files.copy(in, resolvedPath);
+        // extractFile(in, filePath);
+        // files.add(filePath);
+        // unzip(filePath, filePath.substring(0, filePath.length()-4));
+        // Path resolvedPath = Paths.get(filePath);
+        // Files.deleteIfExists(resolvedPath);
+            if (!entry.isDirectory() && getExtension(filePath).equals("java")) {
+                // if the entry is a JAVA file, extract it
+                
+                // Files.copy(in, resolvedPath);
+                
+                // Files.createDirectories(resolvedPath.getParent());
+                
+                // extractFile(in, filePath);
+                // files.add(filePath);
+            }
+            else if(getExtension(filePath).equals("zip")){
+                // extractFile(in, filePath);
+                // files.add(filePath);
                 //save student zip files to submissions folder
-                Path resolvedPath = Paths.get(filePath);
-                Files.createDirectories(resolvedPath.getParent());
-                Files.copy(in, resolvedPath);
+                // Files.createDirectories(resolvedPath.getParent());
+                // Files.copy(in, resolvedPath);
                 //recursive call to extract java files from each student submission zip
-                unzip(filePath, filePath.substring(0, filePath.length()-4));
+                unzip(filePath);
                 //remove student zip file from submissions
                 Files.deleteIfExists(resolvedPath);
             }
+            // else if (entry.isDirectory()){
+            //     // if the entry is a directory, make the directory
+            //     file.mkdir();
+            // }
         }
-        else if (entry.isDirectory()){
-            // if the entry is a directory, make the directory
-            File dir = new File(filePath);
-            dir.mkdirs();
-        }
-            in.closeEntry();
-            entry = in.getNextEntry();
-        }
+        in.closeEntry();
+        entry = in.getNextEntry();
+    }
         in.close();
         
-        for(String file: files)
-         System.out.println(file);
+        // for(String file: files)
+        //  System.out.println(file);
     }
 
     //determine the file extension
@@ -80,7 +94,7 @@ public class FileExtractor
     }
     
 
-    private static void extractJavaFile(ZipInputStream zipIn, String filePath) throws IOException {
+    private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
         BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(filePath));
         byte[] bytesIn = new byte[BUFFER_SIZE];
         int read = 0;
