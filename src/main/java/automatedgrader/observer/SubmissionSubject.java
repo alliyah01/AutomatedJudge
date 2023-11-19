@@ -4,6 +4,6 @@ package automatedgrader.observer;
 public interface SubmissionSubject {
   void attachObserver(PDFObserver observer);
   void detachObserver(PDFObserver observer);
-  void notifyObserver();
+  void notifyObserver(List<EvaluationResult> testResults);
 } 
 
