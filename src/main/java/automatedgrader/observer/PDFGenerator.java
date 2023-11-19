@@ -1,10 +1,3 @@
-// package automatedgrader.observer;
-
-// // Concrete Observer Class for generating PDF reports
-// public class PDFGenerator implements PDFObserver {
-    
-// }
-
 package automatedgrader.observer;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
