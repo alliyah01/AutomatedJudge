@@ -1,4 +1,4 @@
-package project.factory;
+package automatedgrader.factory;
 
 public class ZipFileHandlerFactory implements FileHandlerFactory{
     
