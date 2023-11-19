@@ -1,9 +1,6 @@
 package automatedgrader;
 
-/**
- * Hello world!
- *
- */
+/*
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +9,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+*/
+import automatedgrader.factory.FileHandler;
+import automatedgrader.factory.FileHandlerFactory;
+import automatedgrader.factory.ZipFileHandlerFactory;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.AccessSpecifier;
@@ -23,6 +24,15 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class App {
     public static void main(String[] args) {
+        //Code to accept and extract zipped files
+        FileHandlerFactory fileHandlerFactory = new ZipFileHandlerFactory();
+        FileHandler fileHandler = fileHandlerFactory.createFileHandler();
+
+        String zipFilePath = "files/submissions.zip";
+        fileHandler.handleFile(zipFilePath);
+    }
+        
+        /*
         FileExtractor fileExtractor = new FileExtractor();
         try {
             fileExtractor.unzip("files/submissions.zip", "files/submissions");
@@ -63,8 +73,9 @@ public class App {
                 }
             }
          }
-    }
-
+         */
+    
+    
 
     // Visitor to print class information
     private static class ClassVisitor extends VoidVisitorAdapter<Void> {
@@ -86,5 +97,5 @@ public class App {
     
         super.visit(n, arg);
     }
-}
+    }
 }
