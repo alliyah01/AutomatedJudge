@@ -1,67 +1,77 @@
-package automatedgrader.strategy;
+package project.strategy;
 
 import java.io.IOException;
 import java.nio.file.Files;
+//import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class NamingConventionEvaluation implements EvaluationStrategy { //names to be updated some more
+public class NamingConventionEvaluation implements EvaluationStrategy {
     @Override
-    public void evaluate(String javaFilePath){
-        try{
-            //Extract class names from the Java file
-            List<String>classNames = extractClassSignature(javaFilePath);
+    public void evaluate(String filePath) {
+        String javaCode = readJavaCodeFromFile(filePath);
 
-            //Check naming conventions for each class
-            for (String className : classNames){
-                if(!isValidClassName(className)){
-                    System.out.println("Naming convention violation: " + className);
-                }
+        checkClassNames(javaCode);
+        
+        checkMethodNames(javaCode);
+
+        checkAttributeNames(javaCode);
+    }
+
+    private void checkClassNames(String javaCode) {
+        Pattern classNamePattern = Pattern.compile("\\bclass\\s+([A-Z][a-zA-Z0-9]*)\\b");
+        Matcher matcher = classNamePattern.matcher(javaCode);
+
+        while (matcher.find()) {
+            String className = matcher.group(1);
+            if (!isCamelCase(className)) {
+                System.out.println("Class name '" + className + "' does not follow CamelCase convention.");
+                // Add corrective feedback or take appropriate action
             }
-        } catch (IOException e){
-            System.err.println("Error reading Java file:" + e.getMessage());
         }
     }
 
-    private List<String> extractClassSignature(String javaFilePath) throws IOException {
-        String content = new String(Files.readAllBytes(Paths.get(javaFilePath)));
-    
-       String regex = "\\s*public\\s+class\\s+(\\w+)\\s*\\{?\\s*";
-       List<String>classNames = new ArrayList<>();
+    private void checkMethodNames(String javaCode) {
+        Pattern methodPattern = Pattern.compile("\\b\\w+\\s+(\\w+)\\s*\\(");
+        Matcher matcher = methodPattern.matcher(javaCode);
 
-       java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
-       java.util.regex.Matcher matcher = pattern.matcher(content);
-
-       while(matcher.find()){
-        classNames.add(matcher.group(1));
-       }
-       return classNames;
-    }
-
-    private boolean isValidClassName(String className){
-        //Checking if class begins with a capital letter
-        if(!Character.isUpperCase(className.charAt(0))){
-            System.out.println("Invalid class name: " + className + ". Class names should start with an uppeercase letter.");
-        }
-
-        //Checking for CamelCase
-        for(int i = 1; i < className.length(); i++){
-            char currentChar = className.charAt(i);
-
-            if(!Character.isLetter(currentChar)){
-                System.out.println("Invalid class name: " + className + ". Class names should only contain letters.");
-                return false;
-            }
-
-            if(Character.isUpperCase(currentChar) && i > 1 && !Character.isUpperCase(className.charAt(i-1))){
-                System.out.println("Invalid class name: " + className + ". Class names should follow CamelCase");
-                return false;
+        while (matcher.find()) {
+            String methodName = matcher.group(1);
+            if (!isCamelCase(methodName)) {
+                System.out.println("Method name '" + methodName + "' does not follow CamelCase convention.");
+                // Add corrective feedback or take appropriate action
             }
         }
-        //once everything passed
-        return true; 
     }
 
-    
+    private void checkAttributeNames(String javaCode) {
+        Pattern attributePattern = Pattern.compile("\\b\\w+\\s+(\\w+)\\s*;");
+        Matcher matcher = attributePattern.matcher(javaCode);
+
+        while (matcher.find()) {
+            String attributeName = matcher.group(1);
+            if (!isSnakeCase(attributeName)) {
+                System.out.println("Attribute name '" + attributeName + "' does not follow snake_case convention.");
+                // Add corrective feedback or take appropriate action
+            }
+        }
+    }
+
+    private boolean isCamelCase(String name) {
+        return name.matches("^[a-z]+([A-Z][a-zA-Z0-9]*)*$");
+    }
+
+    private boolean isSnakeCase(String name) {
+        return name.matches("^[a-z]+(_[a-z]+)*$");
+    }
+
+    private String readJavaCodeFromFile(String filePath) {
+    try {
+        return Files.readString(Paths.get(filePath));
+    } catch (IOException e) {
+        System.err.println("IOException during reading the file: " + e.getMessage());
+        return "";
+    }
+}
 }
