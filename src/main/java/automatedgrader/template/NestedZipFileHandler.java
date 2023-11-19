@@ -21,6 +21,11 @@ public class NestedZipFileHandler extends FileHandler{
                     handleFile(destFilePath);
                     Files.deleteIfExists(destinationPath);
                 }
+                if (entry.isDirectory()){
+                    // if the entry is a directory, make the directory
+                    File dir = new File(destFilePath);
+                    dir.mkdirs();
+                }
             }
             in.closeEntry();
             entry = in.getNextEntry();

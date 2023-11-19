@@ -44,7 +44,10 @@ public abstract class FileHandler {
             File destDir = new File(zipFilePath.substring(0, zipFilePath.length()-4));
             if (!destDir.exists()) {
                 destDir.mkdir();
-             }
+            }
+        }
+        else{
+            System.err.println("The destination folder exists already. Files may be added or updated but none deleted.");
         }
     }
 

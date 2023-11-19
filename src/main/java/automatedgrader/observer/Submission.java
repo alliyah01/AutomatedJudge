@@ -13,6 +13,24 @@ public class Submission implements SubmissionSubject {
         this.assignmentNumber = assignmentNumber;
         // You can initialize other properties as needed
     }
+    
+    @Override
+    public void attachObserver(PDFObserver observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'attachObserver'");
+    }
+
+    @Override
+    public void detachObserver(PDFObserver observer) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'detachObserver'");
+    }
+
+    @Override
+    public void notifyObserver() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyObserver'");
+    }
 
     public String getStudentId() {
         return studentId;

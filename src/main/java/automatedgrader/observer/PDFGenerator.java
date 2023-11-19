@@ -10,7 +10,8 @@ import automatedgrader.strategy.EvaluationResult;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.nio.file.FileSystems; 
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path; 
 import java.util.List;
 

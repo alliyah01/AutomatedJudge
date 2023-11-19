@@ -10,17 +10,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 */
-import automatedgrader.factory.FileHandler;
-import automatedgrader.factory.FileHandlerFactory;
-import automatedgrader.factory.ZipFileHandlerFactory;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.AccessSpecifier;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.FieldDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+// import com.github.javaparser.JavaParser;
+// import com.github.javaparser.ast.AccessSpecifier;
+// import com.github.javaparser.ast.CompilationUnit;
+// import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+// import com.github.javaparser.ast.body.FieldDeclaration;
+// import com.github.javaparser.ast.body.MethodDeclaration;
+// import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import automatedgrader.template.NestedZipFileHandler;
 
@@ -77,25 +74,25 @@ public class App {
     
     
 
-    // Visitor to print class information
-    private static class ClassVisitor extends VoidVisitorAdapter<Void> {
-    @Override
-    public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-        System.out.println("Class Name: " + n.getAccessSpecifier().asString() + " " + n.getName());
-    
-        // Print fields
-        System.out.println("Fields:");
-        n.getFields().forEach(field -> {
-            System.out.println("- " + field.getAccessSpecifier().asString() + " " + field.getVariables().get(0).getNameAsString());
-        });
-    
-        // Print methods
-        System.out.println("Methods:");
-        n.getMethods().forEach(method -> {
-            System.out.println("- " + method.getAccessSpecifier().asString()  + " " +  method.getName());
-        });
-    
-        super.visit(n, arg);
-    }
-    }
+    // // Visitor to print class information
+    // private static class ClassVisitor extends VoidVisitorAdapter<Void> {
+    //     @Override
+    //     public void visit(ClassOrInterfaceDeclaration n, Void arg) {
+    //         System.out.println("Class Name: " + n.getAccessSpecifier().asString() + " " + n.getName());
+        
+    //         // Print fields
+    //         System.out.println("Fields:");
+    //         n.getFields().forEach(field -> {
+    //             System.out.println("- " + field.getAccessSpecifier().asString() + " " + field.getVariables().get(0).getNameAsString());
+    //         });
+        
+    //         // Print methods
+    //         System.out.println("Methods:");
+    //         n.getMethods().forEach(method -> {
+    //             System.out.println("- " + method.getAccessSpecifier().asString()  + " " +  method.getName());
+    //         });
+        
+    //         super.visit(n, arg);
+    //     }
+    // }
 }
