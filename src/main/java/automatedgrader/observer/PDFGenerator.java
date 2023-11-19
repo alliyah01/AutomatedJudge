@@ -1,10 +1,3 @@
-// package automatedgrader.observer;
-
-// // Concrete Observer Class for generating PDF reports
-// public class PDFGenerator implements PDFObserver {
-    
-// }
-
 package automatedgrader.observer;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -35,6 +28,8 @@ public class PDFGenerator implements PDFObserver {
 
             String pdfFileName = String.format("%s_%s_Assignment%d_feedback.pdf", studentId, fileName, assignmentNumber);
 
+            String outputDirectory = "submissions";
+            
             try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
@@ -57,7 +52,13 @@ public class PDFGenerator implements PDFObserver {
             }
 
             // Save PDF in the submission folder
-            Path outputPath = FileSystems.getDefault().getPath("submissions", pdfFileName);
+            Path outputDirectoryPath = FileSystems.getDefault().getPath(outputDirectory);
+            if (!Files.exists(outputDirectoryPath)) {
+                Files.createDirectories(outputDirectoryPath);
+            }
+
+            Path outputPath = outputDirectoryPath.resolve(pdfFileName);
+            
             document.save(outputPath.toString());
         } catch (IOException e) {
             // Handle IOException

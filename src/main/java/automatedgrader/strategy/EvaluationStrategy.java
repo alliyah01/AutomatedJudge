@@ -1,6 +1,5 @@
 package automatedgrader.strategy;
 
-// Strategy Interface
 public interface EvaluationStrategy {
-    // Method signature for evaluation
+    void evaluate(String javaFilePath);
 }
