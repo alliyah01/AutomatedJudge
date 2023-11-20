@@ -1,0 +1,16 @@
+automatedgrader/strategy/EvaluationResult.class
+automatedgrader/observer/SubmissionSubject.class
+automatedgrader/observer/PDFGenerator.class
+automatedgrader/state/PendingEvaluationState.class
+automatedgrader/FileExtractor.class
+automatedgrader/state/SubmissionState.class
+automatedgrader/factory/SubmissionProcessorCreator.class
+automatedgrader/observer/Submission.class
+automatedgrader/factory/ZipSubmissionProcessor.class
+automatedgrader/observer/PDFObserver.class
+automatedgrader/App.class
+automatedgrader/factory/SubmisssionProcessor.class
+automatedgrader/strategy/EvaluationStrategy.class
+automatedgrader/strategy/BasicEvaluationStrategy.class
+automatedgrader/state/CompletedEvaluationState.class
+automatedgrader/factory/ZipSubmissionProcessorCreator.class
